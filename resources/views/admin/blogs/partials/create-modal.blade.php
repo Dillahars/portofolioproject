@@ -1,0 +1,47 @@
+<x-layouts.app :title="__('Create Project')">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">{{ __('Create Project') }}</h1>
+
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-800 p-2 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-4">
+                <label for="name" class="block font-semibold mb-1">{{ __('Name') }}</label>
+                <input type="text" name="name" id="name" value="{{ old('name') }}" required class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block font-semibold mb-1">{{ __('Description') }}</label>
+                <textarea name="description" id="description" class="w-full border border-gray-300 rounded px-3 py-2">{{ old('description') }}</textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="start_date" class="block font-semibold mb-1">{{ __('Start Date') }}</label>
+                <input type="date" name="start_date" id="start_date" value="{{ old('start_date') }}" required class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+
+            <div class="mb-4">
+                <label for="end_date" class="block font-semibold mb-1">{{ __('End Date') }}</label>
+                <input type="date" name="end_date" id="end_date" value="{{ old('end_date') }}" class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="block font-semibold mb-1">{{ __('Project Image') }}</label>
+                <input type="file" name="image" id="image" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                {{ __('Create') }}
+            </button>
+        </form>
+    </div>
+</x-layouts.app>
