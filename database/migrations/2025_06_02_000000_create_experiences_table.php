@@ -15,6 +15,7 @@ class CreateExperiencesTable extends Migration
             $table->id();
             $table->string('company_name');
             $table->string('position');
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }

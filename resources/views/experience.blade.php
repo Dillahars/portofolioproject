@@ -195,6 +195,7 @@
       @foreach ($experiences as $experience)
       <article class="timeline-event" tabindex="0">
         <h3>{{ $experience->company_name }}</h3>
+        <img src="{{ $experience->image_path }}" alt="{{ $experience->company_name }} image" class="max-w-full max-h-40 object-contain mb-2 rounded" />
         <p>{{ $experience->position }}</p>
       </article>
       @endforeach

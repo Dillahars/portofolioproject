@@ -43,7 +43,13 @@ class ExperienceController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('experiences', 'public');
+            $validated['image_url'] = 'storage/' . $imagePath;
+        }
 
         Experience::create($validated);
 
@@ -78,7 +84,13 @@ class ExperienceController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('experiences', 'public');
+            $validated['image_url'] = 'storage/' . $imagePath;
+        }
 
         $experience->update($validated);
 

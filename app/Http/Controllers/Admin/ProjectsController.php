@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class ProjectsController extends Controller
 {
@@ -12,7 +13,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = \App\Models\Project::all();
+        $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -21,7 +22,6 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        // TODO: Implement logic to show form to create a new project
         return view('admin.projects.partials.create-modal');
     }
 
@@ -40,21 +40,12 @@ class ProjectsController extends Controller
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = '/storage/' . $imagePath;
+            $validated['image_url'] = 'storage/' . $imagePath;
         }
 
-        \App\Models\Project::create($validated);
+        Project::create($validated);
 
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        // TODO: Implement logic to show a specific project
-        return view('admin.projects.show', compact('id'));
     }
 
     /**
@@ -62,7 +53,7 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        $project = \App\Models\Project::findOrFail($id);
+        $project = Project::findOrFail($id);
         return view('admin.projects.partials.edit-modal', compact('project', 'id'));
     }
 
@@ -71,7 +62,7 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $project = \App\Models\Project::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -83,7 +74,7 @@ class ProjectsController extends Controller
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = '/storage/' . $imagePath;
+            $validated['image_url'] = 'storage/' . $imagePath;
         }
 
         $project->update($validated);
@@ -96,7 +87,7 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        $project = \App\Models\Project::findOrFail($id);
+        $project = Project::findOrFail($id);
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');

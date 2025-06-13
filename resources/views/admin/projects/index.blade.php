@@ -30,8 +30,8 @@
                     @foreach($projects as $project)
                     <tr>
                         <td class="py-2 px-4 border-b text-black">
-                            @if($project->image_url)
-                                <img src="{{ $project->image_url }}" alt="{{ $project->name }} image" class="max-h-40 max-w-40 object-contain rounded">
+                            @if($project->image_path)
+                                <img src="{{ $project->image_path }}" alt="{{ $project->name }} image" class="max-h-40 max-w-40 object-contain rounded">
                             @else
                                 <span>No Image</span>
                             @endif

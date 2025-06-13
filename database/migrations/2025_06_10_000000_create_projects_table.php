@@ -14,10 +14,10 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image_url')->nullable(); // kolom untuk gambar
             $table->text('description')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }

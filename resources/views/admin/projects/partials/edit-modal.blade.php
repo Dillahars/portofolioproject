@@ -39,8 +39,8 @@
             <div class="mb-4">
                 <label for="image" class="block font-semibold mb-1">{{ __('Project Image') }}</label>
                 <input type="file" name="image" id="image" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2">
-                @if($project->image_url)
-                    <img src="{{ $project->image_url }}" alt="{{ $project->name }} image" class="mt-2 max-h-40 object-contain">
+                @if($project->image_path)
+                    <img src="{{ $project->image_path }}" alt="{{ $project->name }} image" class="mt-2 max-h-40 object-contain">
                 @endif
             </div>
 

@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+use App\Models\Experience;
+
 Route::get('/', function () {
     $projects = \App\Models\Project::all();
-    return view('home', ['nama'=> 'Rakha Abdillah Nugraha', 'projects' => $projects]);
+    $experiences = Experience::all();
+    return view('home', ['nama'=> 'Rakha Abdillah Nugraha', 'projects' => $projects, 'experiences' => $experiences]);
 })->name('home');
 
 Route::get('/about', function () {
