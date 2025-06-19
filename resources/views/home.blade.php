@@ -49,7 +49,7 @@
     nav .logo {
       font-size: 2rem;
       font-weight: 700;
-      color: #f0a500;
+      color:rgb(230, 211, 172);
       text-shadow: 0 0 20px #f0a500cc;
       cursor: default;
       transform-style: preserve-3d;
@@ -104,8 +104,7 @@
       border-radius: 50%;
       overflow: hidden;
       box-shadow:
-        0 15px 40px rgba(240,165,0,0.9),
-        0 0 70px #f0a500dd;
+
       transform-style: preserve-3d;
       transition: box-shadow 0.4s ease;
       will-change: transform;
@@ -140,10 +139,8 @@
     .hero .intro h1 {
       font-size: 3.5rem;
       margin-bottom: 0.8rem;
-      color: #f0a500;
+      color:rgb(231, 231, 231);
       text-shadow:
-        0 0 28px #f0a500ee,
-        0 0 40px #f0a500cc;
       cursor: default;
       transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), text-shadow 0.5s ease;
       transform-style: preserve-3d;
@@ -176,7 +173,7 @@
     #about h2 {
       font-size: 3rem;
       margin-bottom: 1rem;
-      color: #f0a500;
+      color:rgb(255, 255, 255);
       text-shadow: 0 0 18px #f0a500cc;
       user-select:none;
     }
@@ -193,11 +190,11 @@
       user-select:none;
     }
     .featured-projects h2 {
-      color: #f0a500;
+      color:rgb(255, 244, 244);
       font-size: 2.9rem;
       text-align: center;
       margin-bottom: 2.5rem;
-      text-shadow: 0 0 18px #f0a500dc;
+      text-shadow: 0 0 18pxrgba(247, 247, 247, 0.86);
       user-select:none;
     }
     .projects-grid {
@@ -375,6 +372,28 @@
       }
     }
 
+    /* Teks Berjalan */
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+      position: relative;
+      /* background: rgba(15, 32, 39, 0.8); */
+      color: #f0a500;
+      font-size: 1.5rem;
+      padding: 10px 0;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+
     /* Responsive */
     @media (max-width: 720px) {
       .hero {
@@ -428,18 +447,23 @@
     <!-- Hero Section -->
     <section id="home" class="hero" aria-label="Introduction">
       <div class="photo" aria-hidden="true" id="heroPhoto">
-        <img src="https://i.postimg.cc/QtsQj7nm/20240822-173800.jpg" alt="Profile photo of portfolio owner" />
+        <img src="https://i.postimg.cc/PqDG1LDN/20250608-110842.jpg" alt="Profile photo of portfolio owner" />
       </div>
-      <div class="intro" id="heroIntro">
-        <h1>Hello, I'm Rakha Abdillah</h1>
-        <p>
+      <div class="intro marquee" id="heroIntro">
+        <span><h1>Hello, I'm Rakha Abdillah</h1></span>
+            <!-- Teks Berjalan -->
+    <!-- <div class="marquee">
+      <span>Selamat datang di portfolio saya! Saya seorang pengembang web dan desainer.</span>
+    </div> -->
+        x
+      </div>
+      <p>
           I'm a passionate web developer and designer specializing in modern 3D experiences and interactive web design. Let's create stunning digital worlds together!
         </p>
-      </div>
-    </section>
+    </section>  
 
     <!-- About Section -->
-    <section id="about" aria-label="About Me">
+    <section id="about" aria- ="About Me">
       <h2>About Me</h2>
       <p>
         I love crafting beautiful and functional web experiences with a focus on immersive 3D styles and UX excellence.
@@ -453,10 +477,10 @@
       <div class="projects-grid" id="projectsGrid">
          @foreach ($projects as $project)
          <article class="project-card" tabindex="0" aria-describedby="proj{{ $project->id }}desc" data-tilt>
-           <img src="{{ $project->image_path }}" alt="Screenshot of project {{ $project->name }}" />
+           <img src="{{ asset($project->image_url) }}" alt="{{ $project->name }} screenshot" />
            <div class="content">
-             <h3>{{ $project->name }}</h3>
-            <p id="proj{{ $project->id }}desc">{{ $project->description }}</p>
+             <h3>{{ $project->nama }}</h3>
+            <p id="proj{{ $project->id }}desc">{{ $project->deskripsi }}</p>
           </div>
         </article>
         @endforeach

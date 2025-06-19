@@ -3,44 +3,41 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.projects.partials.create-modal');
+        $projects = Project::all();
+        return view('admin.projects.partials.create-modal', compact('projects'))->with('showCreateModal', true);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+            'gambar' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = 'storage/' . $imagePath;
+        if ($request->hasFile('gambar')) {
+            $image = $request->file('gambar');
+            $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('projects', $imageName, 'public');
+            // Save relative path without Storage::url to store path correctly
+            $validated['image_path'] = 'storage/' . $imagePath;
         }
 
         Project::create($validated);
@@ -48,33 +45,26 @@ class ProjectsController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function update(Request $request, Project $project)
     {
-        $project = Project::findOrFail($id);
-        return view('admin.projects.partials.edit-modal', compact('project', 'id'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $project = Project::findOrFail($id);
-
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+            'gambar' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = 'storage/' . $imagePath;
+        if ($request->hasFile('gambar')) {
+            // Delete old image if exists
+            if ($project->image_path) {
+                $oldImagePath = str_replace('/storage/', '', $project->image_path);
+                Storage::disk('public')->delete($oldImagePath);
+            }
+            $image = $request->file('gambar');
+            $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('projects', $imageName, 'public');
+            $validated['image_path'] = Storage::url($imagePath);
         }
 
         $project->update($validated);
@@ -82,14 +72,92 @@ class ProjectsController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        $project = Project::findOrFail($id);
+        if ($project->image_path) {
+            $oldImagePath = str_replace('/storage/', '', $project->image_path);
+            Storage::disk('public')->delete($oldImagePath);
+        }
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
     }
 }
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Str;
+
+// class ProjectsController extends Controller
+// {
+//     public function index()
+//     {
+//         $projects = Project::all();
+//         return view('admin.projects.index', compact('projects'));
+//     }
+
+//     public function create()
+//     {
+//         $projects = Project::all();
+//         return view('admin.projects.partials.create-modal', compact('projects'))->with('showCreateModal', true);
+//     }
+
+//     public function store(Request $request)
+//     {
+//         $validated = $request->validate([
+//             'nama' => 'required|string|max:255',
+//             'deskripsi' => 'nullable|string',
+//             'tanggal_mulai' => 'required|date',
+//             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+//             'gambar' => 'nullable|image|max:2048',
+//         ]);
+
+//         if ($request->hasFile('gambar')) {
+//             $image = $request->file('gambar');
+//             $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+//             $imagePath = $image->storeAs('projects', $imageName, 'public');
+//             $validated['image_path'] = Storage::url($imagePath);
+//         }
+
+//         Project::create($validated);
+
+//         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
+//     }
+
+//     public function update(Request $request, Project $project)
+//     {
+//         $validated = $request->validate([
+//             'nama' => 'required|string|max:255',
+//             'deskripsi' => 'nullable|string',
+//             'tanggal_mulai' => 'required|date',
+//             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+//             'gambar' => 'nullable|image|max:2048',
+//         ]);
+
+//         if ($request->hasFile('gambar')) {
+//             // Delete old image if exists
+//             if ($project->image_path) {
+//                 $oldImagePath = str_replace('/storage/', '', $project->image_path);
+//                 Storage::disk('public')->delete($oldImagePath);
+//             }
+//             $image = $request->file('gambar');
+//             $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+//             $imagePath = $image->storeAs('projects', $imageName, 'public');
+//             $validated['image_path'] = Storage::url($imagePath);
+//         }
+
+//         $project->update($validated);
+
+//         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
+//     }
+
+//     public function destroy(Project $project)
+//     {
+//         if ($project->image_path) {
+//             $oldImagePath = str_replace('/storage/', '', $project->image_path);
+//             Storage::disk('public')->delete($oldImagePath);
+//         }
+//         $project->delete();
+
+//         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
+//     }
+// }

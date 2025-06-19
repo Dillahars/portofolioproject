@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsTable extends Migration
+class CreateProyeksTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('proyek', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image_url')->nullable(); // kolom untuk gambar
-            $table->text('description')->nullable();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->string('nama');
+            $table->text('deskripsi')->nullable();
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

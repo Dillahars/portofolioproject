@@ -9,24 +9,41 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $table = 'proyek';
+
     protected $fillable = [
-        'name',
-        'description',
-        'start_date',
-        'end_date',
-        'image_url',
+        'nama',
+        'deskripsi',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'image_path',
     ];
 
-    // Accessor for full image path with storage handling and fallback
-    public function getImagePathAttribute()
+    // Accessors for public-facing properties
+    public function getNameAttribute()
     {
-        if ($this->image_url) {
-            if (file_exists(public_path($this->image_url))) {
-                return asset($this->image_url);
-            } elseif (file_exists(public_path('storage/' . $this->image_url))) {
-                return asset('storage/' . $this->image_url);
-            }
-        }
-        return 'https://via.placeholder.com/400x160?text=No+Image';
+        return $this->attributes['nama'];
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->attributes['deskripsi'];
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->attributes['image_path'] ? asset($this->attributes['image_path']) : null;
+    }
+
+    public function getGithubUrlAttribute()
+    {
+        // Placeholder, update if you have github_url column
+        return null;
+    }
+
+    public function getSkillsAttribute()
+    {
+        // Placeholder, update if you have skills relation or column
+        return [];
     }
 }

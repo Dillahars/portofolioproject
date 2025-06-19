@@ -24,10 +24,10 @@
                 <input type="text" name="position" id="position" value="{{ old('position') }}" required class="w-full border border-gray-300 rounded px-3 py-2">
             </div>
 
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label for="image" class="block font-semibold mb-1">{{ __('Experience Image') }}</label>
                 <input type="file" name="image" id="image" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2">
-            </div>
+            </div> -->
 
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 {{ __('Create') }}

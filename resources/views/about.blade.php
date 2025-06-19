@@ -165,7 +165,7 @@
   </header>
   <main role="main" aria-label="About me profile">
     <div class="profile-photo" aria-hidden="true">
-      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=320&q=80" alt="Profile photo" />
+      <img src="https://i.postimg.cc/PqDG1LDN/20250608-110842.jpg" alt="Profile photo" />
     </div>
     <div class="bio">
       <h1>About Me</h1>
