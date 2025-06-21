@@ -216,7 +216,7 @@
   </header>
   <main>
     <h1>Contact Me</h1>
-<form id="contactForm" novalidate aria-label="Contact form" method="POST" action="{{ route('admin.contact.store') }}">
+<form id="contact-form" novalidate aria-label="Contact form" method="POST" action="{{ route('admin.contact.store') }}">
       @csrf
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required aria-required="true" placeholder="Your name" autocomplete="name" />

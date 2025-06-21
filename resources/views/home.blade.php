@@ -450,7 +450,7 @@
         <img src="https://i.postimg.cc/PqDG1LDN/20250608-110842.jpg" alt="Profile photo of portfolio owner" />
       </div>
       <div class="intro marquee" id="heroIntro">
-        <span><h1>Hello, I'm Rakha Abdillah</h1></span>
+        <span><h1>Hello, I'm Rakha Abdillah Nugraha</h1></span>
             <!-- Teks Berjalan -->
     <!-- <div class="marquee">
       <span>Selamat datang di portfolio saya! Saya seorang pengembang web dan desainer.</span>
