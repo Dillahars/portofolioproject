@@ -18,6 +18,7 @@ class CreateProyeksTable extends Migration
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai')->nullable();
             $table->string('image_path')->nullable();
+            $table->string('link_github')->nullable();
             $table->timestamps();
         });
     }

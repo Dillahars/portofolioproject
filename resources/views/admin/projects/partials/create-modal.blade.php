@@ -43,6 +43,11 @@
                         @error('tanggal_selesai') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div class="mb-4">
+                        <label for="link_github" class="block font-semibold mb-1">{{ __('Link Github') }}</label>
+                        <input type="link" name="link_github" id="link_github" class="w-full border border-gray-300 rounded px-3 py-2" />
+                        @error('link_github') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="mb-4">
                         <label for="gambar" class="block font-semibold mb-1">{{ __('Project Image') }}</label>
                         <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full" onchange="previewImage(event, 'createImagePreview')" />
                         @error('gambar') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror

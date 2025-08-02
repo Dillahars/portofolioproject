@@ -17,6 +17,7 @@ class Project extends Model
         'tanggal_mulai',
         'tanggal_selesai',
         'image_path',
+        'link_github',
     ];
 
     // Accessors for public-facing properties
@@ -37,13 +38,7 @@ class Project extends Model
 
     public function getGithubUrlAttribute()
     {
-        // Placeholder, update if you have github_url column
-        return null;
+        return $this->attributes['link_github'];
     }
 
-    public function getSkillsAttribute()
-    {
-        // Placeholder, update if you have skills relation or column
-        return [];
-    }
 }

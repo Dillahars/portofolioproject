@@ -30,6 +30,7 @@ class ProjectsController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|max:2048',
+            'link_github' => 'nullable|string',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -53,6 +54,7 @@ class ProjectsController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|max:2048',
+            'link_github' => 'nullable|string',
         ]);
 
         if ($request->hasFile('gambar')) {

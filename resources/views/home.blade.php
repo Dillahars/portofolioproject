@@ -258,6 +258,21 @@
       border-color: #ffcc0077;
     }
 
+    /* Project Links */
+    .project-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+    .project-link:hover .project-card,
+    .project-link:focus .project-card {
+      transform: translateZ(40px) scale(1.07);
+      box-shadow:
+        20px 20px 45px #f0a500cc,
+        -15px -15px 45px #fff4a5cc,
+        inset 0 0 15px #f0a500cc;
+    }
+
     /* Skills Section */
     #skills {
       text-align: center;
@@ -431,7 +446,7 @@
 <body>
   <header>
     <nav>
-      <div class="logo" aria-label="Website Logo">My3DPortfolio</div>
+      <div class="logo" aria-label="Website Logo">MyPortfolio</div>
       <ul role="menu" aria-label="Main Navigation">
   <li><a href="/" tabindex="1">Home</a></li>
   <li><a href="/about" tabindex="2">About</a></li>
@@ -455,7 +470,7 @@
     <!-- <div class="marquee">
       <span>Selamat datang di portfolio saya! Saya seorang pengembang web dan desainer.</span>
     </div> -->
-        x
+        
       </div>
       <p>
           I'm a passionate web developer and designer specializing in modern 3D experiences and interactive web design. Let's create stunning digital worlds together!
@@ -476,6 +491,7 @@
       <h2>Featured Projects</h2>
       <div class="projects-grid" id="projectsGrid">
          @foreach ($projects as $project)
+         <a href="{{ $project->github_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
          <article class="project-card" tabindex="0" aria-describedby="proj{{ $project->id }}desc" data-tilt>
            <img src="{{ asset($project->image_url) }}" alt="{{ $project->name }} screenshot" />
            <div class="content">
@@ -483,6 +499,7 @@
             <p id="proj{{ $project->id }}desc">{{ $project->deskripsi }}</p>
           </div>
         </article>
+        </a>
         @endforeach
       </div>
     </section>
@@ -561,34 +578,37 @@
     });
 
     // 3D Tilt effect for all project cards
-    const projectCards = document.querySelectorAll('[data-tilt]');
-    projectCards.forEach(card => {
-      card.style.transformStyle = 'preserve-3d';
-      card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+    const projectLinks = document.querySelectorAll('.project-link');
+    projectLinks.forEach(link => {
+      const card = link.querySelector('.project-card');
+      if (card) {
+        card.style.transformStyle = 'preserve-3d';
+        card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
 
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        link.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
 
-        // Calculate rotation degree around center with limits
-        const rotateX = clamp(-(y - centerY) / centerY * 12, -15, 15);
-        const rotateY = clamp((x - centerX) / centerX * 15, -15, 15);
+          // Calculate rotation degree around center with limits
+          const rotateX = clamp(-(y - centerY) / centerY * 12, -15, 15);
+          const rotateY = clamp((x - centerX) / centerX * 15, -15, 15);
 
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(40px) scale(1.07)`;
-        card.style.boxShadow = `
-          20px 20px 45px #f0a500cc,
-          -15px -15px 45px #fff4a5cc,
-          inset 0 0 15px #f0a500cc
-        `;
-      });
+          card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(40px) scale(1.07)`;
+          card.style.boxShadow = `
+            20px 20px 45px #f0a500cc,
+            -15px -15px 45px #fff4a5cc,
+            inset 0 0 15px #f0a500cc
+          `;
+        });
 
-      card.addEventListener('mouseleave', e => {
-        card.style.transform = '';
-        card.style.boxShadow = '';
-      });
+        link.addEventListener('mouseleave', e => {
+          card.style.transform = '';
+          card.style.boxShadow = '';
+        });
+      }
     });
 
     // Skills hover subtle floating effect can be handled by CSS only

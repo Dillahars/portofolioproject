@@ -23,6 +23,7 @@
                         <th class="py-2 px-4 border-b text-black">{{ __('Description') }}</th>
                         <th class="py-2 px-4 border-b text-black">{{ __('Start Date') }}</th>
                         <th class="py-2 px-4 border-b text-black">{{ __('End Date') }}</th>
+                        <th class="py-2 px-4 border-b text-black">{{ __('Link Github') }}</th>
                         <th class="py-2 px-4 border-b text-black">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
@@ -34,6 +35,7 @@
                         <td class="py-2 px-4 border-b text-black">{{ $project->deskripsi }}</td>
                         <td class="py-2 px-4 border-b text-black">{{ $project->tanggal_mulai }}</td>
                         <td class="py-2 px-4 border-b text-black">{{ $project->tanggal_selesai ?? '-' }}</td>
+                        <td class="py-2 px-4 border-b text-black">{{ $project->link_github }}</td>
                         <td class="py-2 px-4 border-b text-black">
                             @if ($project->image_path)
                                 <img src="{{ asset($project->image_url) }}" alt="{{ $project->name }} screenshot" />
